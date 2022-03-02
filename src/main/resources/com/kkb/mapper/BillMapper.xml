@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kkb.mapper.BillMapper">
+  <resultMap id="BaseResultMap" type="com.kkb.pojo.Bill">
+    <id column="id_" jdbcType="BIGINT" property="id_" />
+    <result column="title_" jdbcType="VARCHAR" property="title_" />
+    <result column="bill_time_" jdbcType="DATE" property="bill_time_" />
+    <result column="type_id_" jdbcType="BIGINT" property="type_id_" />
+    <result column="price_" jdbcType="DOUBLE" property="price_" />
+    <result column="explain_" jdbcType="VARCHAR" property="explain_" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id_, title_, bill_time_, type_id_, price_, explain_
+  </sql>
+  <select id="selectByExample" parameterType="com.kkb.pojo.BillExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bill_
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bill_
+    where id_ = #{id_,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from bill_
+    where id_ = #{id_,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kkb.pojo.BillExample">
+    delete from bill_
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kkb.pojo.Bill">
+    insert into bill_ (id_, title_, bill_time_, 
+      type_id_, price_, explain_
+      )
+    values (#{id_,jdbcType=BIGINT}, #{title_,jdbcType=VARCHAR}, #{bill_time_,jdbcType=DATE}, 
+      #{type_id_,jdbcType=BIGINT}, #{price_,jdbcType=DOUBLE}, #{explain_,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.kkb.pojo.Bill">
+    insert into bill_
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id_ != null">
+        id_,
+      </if>
+      <if test="title_ != null">
+        title_,
+      </if>
+      <if test="bill_time_ != null">
+        bill_time_,
+      </if>
+      <if test="type_id_ != null">
+        type_id_,
+      </if>
+      <if test="price_ != null">
+        price_,
+      </if>
+      <if test="explain_ != null">
+        explain_,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id_ != null">
+        #{id_,jdbcType=BIGINT},
+      </if>
+      <if test="title_ != null">
+        #{title_,jdbcType=VARCHAR},
+      </if>
+      <if test="bill_time_ != null">
+        #{bill_time_,jdbcType=DATE},
+      </if>
+      <if test="type_id_ != null">
+        #{type_id_,jdbcType=BIGINT},
+      </if>
+      <if test="price_ != null">
+        #{price_,jdbcType=DOUBLE},
+      </if>
+      <if test="explain_ != null">
+        #{explain_,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kkb.pojo.BillExample" resultType="java.lang.Long">
+    select count(*) from bill_
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bill_
+    <set>
+      <if test="record.id_ != null">
+        id_ = #{record.id_,jdbcType=BIGINT},
+      </if>
+      <if test="record.title_ != null">
+        title_ = #{record.title_,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bill_time_ != null">
+        bill_time_ = #{record.bill_time_,jdbcType=DATE},
+      </if>
+      <if test="record.type_id_ != null">
+        type_id_ = #{record.type_id_,jdbcType=BIGINT},
+      </if>
+      <if test="record.price_ != null">
+        price_ = #{record.price_,jdbcType=DOUBLE},
+      </if>
+      <if test="record.explain_ != null">
+        explain_ = #{record.explain_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bill_
+    set id_ = #{record.id_,jdbcType=BIGINT},
+      title_ = #{record.title_,jdbcType=VARCHAR},
+      bill_time_ = #{record.bill_time_,jdbcType=DATE},
+      type_id_ = #{record.type_id_,jdbcType=BIGINT},
+      price_ = #{record.price_,jdbcType=DOUBLE},
+      explain_ = #{record.explain_,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kkb.pojo.Bill">
+    update bill_
+    <set>
+      <if test="title_ != null">
+        title_ = #{title_,jdbcType=VARCHAR},
+      </if>
+      <if test="bill_time_ != null">
+        bill_time_ = #{bill_time_,jdbcType=DATE},
+      </if>
+      <if test="type_id_ != null">
+        type_id_ = #{type_id_,jdbcType=BIGINT},
+      </if>
+      <if test="price_ != null">
+        price_ = #{price_,jdbcType=DOUBLE},
+      </if>
+      <if test="explain_ != null">
+        explain_ = #{explain_,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id_ = #{id_,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kkb.pojo.Bill">
+    update bill_
+    set title_ = #{title_,jdbcType=VARCHAR},
+      bill_time_ = #{bill_time_,jdbcType=DATE},
+      type_id_ = #{type_id_,jdbcType=BIGINT},
+      price_ = #{price_,jdbcType=DOUBLE},
+      explain_ = #{explain_,jdbcType=VARCHAR}
+    where id_ = #{id_,jdbcType=BIGINT}
+  </update>
+</mapper>
